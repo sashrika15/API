@@ -10,14 +10,20 @@ var connection = mysql.createConnection({
 })
 
 connection.connect(function(err) {
-    if(err) throw err;
+    if(err) 
+    console.log(err);
 
-    console.log('connected as id ' + connection.threadId);
-    connection.query('select * from users;', function(err, result){
-        if (err) throw err;
-        console.log(result);
+    console.log('Connected as id ' + connection.threadId);
+   
+});
 
-    });
+app.get('/users', (res, req) => {
+    connection.query('SELECT * from users', (err, rows, fields) => {
+        if(err)
+        console.log(err);
+        else
+        console.log(JSON.stringify(rows));
+    })
 });
 
 app.listen(3000, () => {
