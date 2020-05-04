@@ -5,7 +5,7 @@ var app = express();
 var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '*******',
+    password: 'Vimmi@rani07',
     database: 'app'
 })
 
@@ -17,12 +17,21 @@ connection.connect(function(err) {
    
 });
 
-app.get('/users', (res, req) => {
+app.get('/users', (req, res) => {
     connection.query('SELECT * from users', (err, rows, fields) => {
         if(err)
         console.log(err);
         else
-        console.log(JSON.stringify(rows));
+        res.send(JSON.stringify(rows));
+    })
+});
+
+app.get('/users/:id', (req, res) => {
+    connection.query('SELECT name from users WHERE id = ?',[req.params.id], (err, rows, fields) => {
+        if(err)
+        console.log(err);
+        else
+        res.send(JSON.stringify(rows));
     })
 });
 
