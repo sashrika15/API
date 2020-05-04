@@ -12,9 +12,7 @@ var connection = mysql.createConnection({
 })
 
 connection.connect(function(err) {
-    if(err) 
-    console.log(err);
-
+    if(err) throw err;
     console.log('Connected as id ' + connection.threadId);
    
 });
@@ -43,6 +41,11 @@ router.get('/:id', (req, res) => {
     })
 });
 
+router.post('/', (req,res) => {
+    console.log(req.body);
+    res.send('Response recorded');
+});
+/*
 fs.createReadStream('data.csv').pipe(csv())
   .on('data', (row) => {
     var sql = `INSERT INTO user1 VALUES ?`;
@@ -54,5 +57,5 @@ fs.createReadStream('data.csv').pipe(csv())
     });
     //console.log(sql);
   });
-  
+*/
 module.exports = router;
