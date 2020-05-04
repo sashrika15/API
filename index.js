@@ -1,8 +1,11 @@
 const express = require("express");
 const app = express();
+const bodyparser = require('body-parser');
 
-//Importint routes
+app.use(bodyparser.json());
+//Importing routes
 const usersRoute = require('./routes/users');
+
 
 app.use('/users', usersRoute);
 

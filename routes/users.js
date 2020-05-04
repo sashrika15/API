@@ -17,17 +17,41 @@ connection.connect(function(err) {
    
 });
 
+
 //Routes 
+
+router.post('/', (req,res) => {
+    fs.createReadStream('./csv/Users-Steps-1.csv')
+    .on('error', (err) => {
+        console.log(err);
+    })
+    .pipe(csv())
+    .on('data', (row) => {
+        var sql = `INSERT INTO user2 VALUES ?`;
+        var values = [[row.id,row.name, row.date, row.steps, row.calories]];
+        //console.log(values);
+        connection.query(sql, [values], (err, result) => {
+            if (err)  throw err;
+        });
+    })
+
+    .on('end', () => {
+        console.log('Reached end of csv');
+    });
+   
+    res.send('Response recorded');
+});
+
 
 router.get('/', (req, res) => {
 
-    connection.query('SELECT * from user1', (err, rows, fields) => {
+    connection.query('SELECT * from user2', (err, rows, fields) => {
         if(err)
         console.log(err);
-        else{
+        else
         res.json(rows);
         
-        }
+        
     });
     
 });
@@ -41,21 +65,7 @@ router.get('/:id', (req, res) => {
     })
 });
 
-router.post('/', (req,res) => {
-    console.log(req.body);
-    res.send('Response recorded');
-});
-/*
-fs.createReadStream('data.csv').pipe(csv())
-  .on('data', (row) => {
-    var sql = `INSERT INTO user1 VALUES ?`;
-    var values = [[row.id,row.name, row.date, row.steps, row.calories]];
-    //console.log(values);
-    connection.query(sql, [values], (err, result) => {
-        if (err) console.log(err);
 
-    });
-    //console.log(sql);
-  });
-*/
+
+
 module.exports = router;
