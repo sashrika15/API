@@ -19,7 +19,7 @@ connection.connect(function(err) {
    
 });
 
-var query = 'CREATE TABLE IF NOT EXISTS users ( id int PRIMARY KEY, name varchar(255) UNIQUE )';
+var query = 'CREATE TABLE IF NOT EXISTS users ( id int PRIMARY KEY, name varchar(255) )';
 
 var q2 = 'CREATE TABLE IF NOT EXISTS user_data ( id int, date bigint, steps int, calories int )';
 
@@ -64,7 +64,7 @@ fs.readdir(testFolder, (err, files) => {
         // console.log(file);
             })
             .on('end', () => {
-                console.log("REached end of csv")
+                console.log("Reached end of csv")
             });
         }
 });
