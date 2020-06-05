@@ -64,6 +64,7 @@ router.post('/', (req,res) => {
                 var sql2 = 'INSERT IGNORE INTO user_data VALUES ?';
                 db.queryAsync(sql1,[[[row.id, row.name]]])
                 .then(db.queryAsync(sql2, [[[row.id, row.date, row.steps, row.calories]]]))
+                .catch(err => console.log(err))
                 })
             .on('end', () => console.log("Reached end of csv"));
             }
