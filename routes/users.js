@@ -69,6 +69,7 @@ router.post('/', (req,res) => {
             .on('end', () => console.log("Reached end of csv"));
             }
         })
+    .then(res.json("Success"))
     .catch(err => console.log(err));
 });
 
